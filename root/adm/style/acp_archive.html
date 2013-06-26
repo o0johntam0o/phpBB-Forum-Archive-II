@@ -1,0 +1,292 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ARCHIVE_TITLE_ACP}</h1>
+<p>{S_ARCHIVE_VERSION} <a href="mailto:o0johntam0o@gmail.com">[&copy;]</a></p>
+
+<!-- IF S_ARCHIVE_WARNING -->
+<div class="errorbox">
+	<h3>{L_WARNING}</h3>
+	<p>{ERROR_MSG}</p>
+</div>
+<!-- ENDIF -->
+
+<script type="text/javascript">
+/* <![CDATA[ */
+function archive_rgb2hex(rbg)
+{
+	var rbg = rbg.replace(/rgb\(|\)/g, '').split(',');
+	rbg[0] = parseInt(rbg[0], 10).toString(16).toLowerCase();
+	rbg[1] = parseInt(rbg[1], 10).toString(16).toLowerCase();
+	rbg[2] = parseInt(rbg[2], 10).toString(16).toLowerCase();
+	rbg[0] = (rbg[0].length == 1) ? '0' + rbg[0] : rbg[0];
+	rbg[1] = (rbg[1].length == 1) ? '0' + rbg[1] : rbg[1];
+	rbg[2] = (rbg[2].length == 1) ? '0' + rbg[2] : rbg[2];
+	return ('#' + rbg.join(''));
+}
+function archive_color_picker(obj)
+{
+	var cpicker = document.getElementById('archive_color_picker_frame');
+	var cpicker_current = document.getElementById(obj.id + '_cpicker');
+	
+	var cpicker_main = document.getElementById('archive_style_bg_main_cpicker');
+	var cpicker_header = document.getElementById('archive_style_bg_header_cpicker');
+	var cpicker_body = document.getElementById('archive_style_bg_body_cpicker');
+	var cpicker_footer = document.getElementById('archive_style_bg_footer_cpicker');
+	var cpicker_posts = document.getElementById('archive_style_bg_posts_cpicker');
+	var cpicker_color_common = document.getElementById('archive_style_color_common_cpicker');
+	var cpicker_color_common_link = document.getElementById('archive_style_color_common_link_cpicker');
+	var cpicker_color_common_vlink = document.getElementById('archive_style_color_common_vlink_cpicker');
+	var cpicker_color_header = document.getElementById('archive_style_color_header_cpicker');
+	var cpicker_color_header_link = document.getElementById('archive_style_color_header_link_cpicker');
+	var cpicker_color_header_vlink = document.getElementById('archive_style_color_header_vlink_cpicker');
+	var cpicker_color_title = document.getElementById('archive_style_color_title_cpicker');
+	var cpicker_color_author = document.getElementById('archive_style_color_author_cpicker');
+	
+	cpicker_main.style.display = 'none';
+	cpicker_main.style.zIndex = '-1';
+	cpicker_header.style.display = 'none';
+	cpicker_header.style.zIndex = '-1';
+	cpicker_body.style.display = 'none';
+	cpicker_body.style.zIndex = '-1';
+	cpicker_footer.style.display = 'none';
+	cpicker_footer.style.zIndex = '-1';
+	cpicker_posts.style.display = 'none';
+	cpicker_posts.style.zIndex = '-1';
+	cpicker_color_common.style.display = 'none';
+	cpicker_color_common.style.zIndex = '-1';
+	cpicker_color_common_link.style.display = 'none';
+	cpicker_color_common_link.style.zIndex = '-1';
+	cpicker_color_common_vlink.style.display = 'none';
+	cpicker_color_common_vlink.style.zIndex = '-1';
+	cpicker_color_header.style.display = 'none';
+	cpicker_color_header.style.zIndex = '-1';
+	cpicker_color_header_link.style.display = 'none';
+	cpicker_color_header_link.style.zIndex = '-1';
+	cpicker_color_header_vlink.style.display = 'none';
+	cpicker_color_header_vlink.style.zIndex = '-1';
+	cpicker_color_title.style.display = 'none';
+	cpicker_color_title.style.zIndex = '-1';
+	cpicker_color_author.style.display = 'none';
+	cpicker_color_author.style.zIndex = '-1';
+	
+	// cpicker_current.innerHTML = cpicker.innerHTML.replace(/archive_style_bg_(main|header|body|footer|posts)?/g, obj.id);
+	cpicker_current.innerHTML = cpicker.innerHTML.replace(/archive_style_bg_/g, obj.id);
+	cpicker_current.style.display = 'inline';
+	cpicker_current.style.zIndex = '100';
+}
+/* ]]> */
+</script>
+
+<form id="acp_archive" method="post" action="{U_ACTION}">
+	<fieldset>
+		<dl>
+			<dt><label>{L_ARCHIVE_ENABLE}:</label><br /><span>{L_ARCHIVE_ENABLE_EXPLAIN}</span></dt>
+			<dd>
+				<input type="radio" class="radio" name="archive_enable" value="1" id="archive_enable_yes"<!-- IF S_ARCHIVE_ENABLE --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_enable_yes"> {L_YES}</label>
+				<input type="radio" class="radio" name="archive_enable" value="0" id="archive_enable_no"<!-- IF not S_ARCHIVE_ENABLE --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_enable_no"> {L_NO}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_topics_per_page">{L_ARCHIVE_TOPICS_PER_PAGE}:</label><br /><span>{L_ARCHIVE_TOPICS_PER_PAGE_EXPLAIN}</span></dt>
+			<dd>
+				<input type="text" maxlength="4" size="4" name="archive_topics_per_page" value="{S_ARCHIVE_TOPICS_PER_PAGE}" id="archive_topics_per_page" />
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_posts_per_page">{L_ARCHIVE_POSTS_PER_PAGE}:</label><br /><span>{L_ARCHIVE_POSTS_PER_PAGE_EXPLAIN}</span></dt>
+			<dd>
+				<input type="text" maxlength="4" size="4" name="archive_posts_per_page" value="{S_ARCHIVE_POSTS_PER_PAGE}" id="archive_posts_per_page" />
+			</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ARCHIVE_HIDE_MOD}:</label><br /><span>{L_ARCHIVE_HIDE_MOD_EXPLAIN}</span></dt>
+			<dd>
+				<input type="radio" class="radio" name="archive_hide_mod" value="1" id="archive_hide_mod_yes"<!-- IF S_ARCHIVE_HIDE_MOD --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_hide_mod_yes"> {L_YES}</label>
+				<input type="radio" class="radio" name="archive_hide_mod" value="0" id="archive_hide_mod_no"<!-- IF not S_ARCHIVE_HIDE_MOD --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_hide_mod_no"> {L_NO}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ARCHIVE_ADDITIONAL_CODE}:</label><br /><span>{L_ARCHIVE_ADDITIONAL_CODE_EXPLAIN}</span></dt>
+			<dd>
+				<textarea name="archive_additional_code" id="archive_additional_code" rows="10" cols="40" >{S_ARCHIVE_ADDITIONAL_CODE}</textarea>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ARCHIVE_CUSTOM_STYLE}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN}</span></dt>
+			<dd>
+				<input type="radio" class="radio" name="archive_custom_style" value="1" id="archive_custom_style_yes"<!-- IF S_ARCHIVE_CUSTOM_STYLE --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_custom_style_yes"> {L_YES}</label>
+				<input type="radio" class="radio" name="archive_custom_style" value="0" id="archive_custom_style_no"<!-- IF not S_ARCHIVE_CUSTOM_STYLE --> checked="checked"<!-- ENDIF --> />
+				<label for="archive_custom_style_no"> {L_NO}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_bg_main">{L_ARCHIVE_STYLE_BG_MAIN}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_bg_main" value="{S_ARCHIVE_STYLE_BG_MAIN}" id="archive_style_bg_main" onclick="archive_color_picker(this);" />
+				<div id="archive_style_bg_main_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_bg_header">{L_ARCHIVE_STYLE_BG_HEADER}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_bg_header" value="{S_ARCHIVE_STYLE_BG_HEADER}" id="archive_style_bg_header" onclick="archive_color_picker(this);" />
+				<div id="archive_style_bg_header_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_bg_body">{L_ARCHIVE_STYLE_BG_BODY}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_bg_body" value="{S_ARCHIVE_STYLE_BG_BODY}" id="archive_style_bg_body" onclick="archive_color_picker(this);" />
+				<div id="archive_style_bg_body_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_bg_footer">{L_ARCHIVE_STYLE_BG_FOOTER}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_bg_footer" value="{S_ARCHIVE_STYLE_BG_FOOTER}" id="archive_style_bg_footer" onclick="archive_color_picker(this);" />
+				<div id="archive_style_bg_footer_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_bg_posts">{L_ARCHIVE_STYLE_BG_POSTS}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_bg_posts" value="{S_ARCHIVE_STYLE_BG_POSTS}" id="archive_style_bg_posts" onclick="archive_color_picker(this);" />
+				<div id="archive_style_bg_posts_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_common">{L_ARCHIVE_STYLE_COLOR_COMMON}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_common" value="{S_ARCHIVE_STYLE_COLOR_COMMON}" id="archive_style_color_common" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_common_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_common_link">{L_ARCHIVE_STYLE_COLOR_COMMON_LINK}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_common_link" value="{S_ARCHIVE_STYLE_COLOR_COMMON_LINK}" id="archive_style_color_common_link" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_common_link_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_common_vlink">{L_ARCHIVE_STYLE_COLOR_COMMON_VLINK}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_common_vlink" value="{S_ARCHIVE_STYLE_COLOR_COMMON_VLINK}" id="archive_style_color_common_vlink" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_common_vlink_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_header">{L_ARCHIVE_STYLE_COLOR_HEADER}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_header" value="{S_ARCHIVE_STYLE_COLOR_HEADER}" id="archive_style_color_header" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_header_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_header_link">{L_ARCHIVE_STYLE_COLOR_HEADER_LINK}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_header_link" value="{S_ARCHIVE_STYLE_COLOR_HEADER_LINK}" id="archive_style_color_header_link" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_header_link_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_header_vlink">{L_ARCHIVE_STYLE_COLOR_HEADER_VLINK}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_header_vlink" value="{S_ARCHIVE_STYLE_COLOR_HEADER_VLINK}" id="archive_style_color_header_vlink" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_header_vlink_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_title">{L_ARCHIVE_STYLE_COLOR_TITLE}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_title" value="{S_ARCHIVE_STYLE_COLOR_TITLE}" id="archive_style_color_title" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_title_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="archive_style_color_author">{L_ARCHIVE_STYLE_COLOR_AUTHOR}:</label><br /><span>{L_ARCHIVE_CUSTOM_STYLE_EXPLAIN2}</span></dt>
+			<dd>
+				<input type="text" maxlength="7" size="7" name="archive_style_color_author" value="{S_ARCHIVE_STYLE_COLOR_AUTHOR}" id="archive_style_color_author" onclick="archive_color_picker(this);" />
+				<div id="archive_style_color_author_cpicker" style="width: 100px; height: 160px; position: absolute; display:none; z-index: -1;"></div>
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</p>
+		{S_FORM_TOKEN}
+	</fieldset>
+</form>
+
+<div id="archive_color_picker_frame" style="width: 100px; height: 160px; position: absolute; right: 10px; top: 10px; display:none; z-index: -1;">
+	<table style="width: 100%; height: 100%; border: #000000 solid 1px; background-color: #ffffff;" cellspacing="1" cellpadding="0">
+	<tbody>
+		<tr>
+			<td style="background-color: #000000; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #993300; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #333300; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #000080; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #333399; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #333333; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #800000; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ff6600; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #808000; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #008000; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #008080; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #0000ff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #666699; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #808080; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ff0000; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #ff9900; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #99cc00; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #339966; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #33cccc; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #3366ff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #800080; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #999999; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ff00ff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ffcc00; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ffff00; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #00ff00; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #00ffff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #00ccff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #993366; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #c0c0c0; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #ff99cc; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ffcc99; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ffff99; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #ccffff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #99ccff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+		<tr>
+			<td style="background-color: #ffffff; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #dcdcdc; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #eeeeee; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #663300; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+			<td style="background-color: #666666; border: #000000 solid 1px;" onclick="document.getElementById('archive_style_bg_').value = archive_rgb2hex(this.style.backgroundColor); document.getElementById('archive_style_bg__cpicker').style.display = 'none'; document.getElementById('archive_style_bg__cpicker').style.zIndex = '-1';"></td>
+		</tr>
+	</tbody>
+	</table>
+</div>
+<!-- INCLUDE overall_footer.html -->
