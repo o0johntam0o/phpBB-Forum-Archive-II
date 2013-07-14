@@ -5,11 +5,8 @@
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
 	<header>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
-
 		<title lang="en"><![CDATA[Forum Archive II]]></title>
-
 		<description lang="en"><![CDATA[This will create an archive for your forum (Faster in loading pages). 100% xHTML 1.0 Strict valid]]></description>
-
 		<author-notes lang="en"><![CDATA[This version is designed for phpBB 3.0.11, but it also works fine on some previous version of phpBB3.]]></author-notes>
 
 		<author-group>
@@ -19,7 +16,7 @@
 			</author>
 		</author-group>
 
-		<mod-version>1.1.3</mod-version>
+		<mod-version>1.1.4</mod-version>
 
 		<installation>
 			<level>easy</level>
@@ -28,6 +25,16 @@
 		</installation>
 
 		<history>
+			<entry>
+				<date>2013-07-14</date>
+				<rev-version>1.1.4</rev-version>
+				<changelog lang="en">
+					<change>Improve: Improve performance</change>
+					<change>Change: Default style for archive page</change>
+					<change>Change: Remove "Additional code" and "Custom style"</change>
+					<change>Other minor changes</change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2013-03-19</date>
 				<rev-version>1.1.3</rev-version>
@@ -119,6 +126,9 @@
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">SubSilver2</link>
 			<link type="template" href="./contrib/absolution.xml" lang="en">Absolution</link>
 			<link type="language" href="./contrib/vi.xml" lang="en">Vietnamese</link>
+			<link type="contrib" href="contrib/update_113-114.xml" lang="en">Update: from 1.1.3 to 1.1.4</link>
+			<link type="contrib" href="contrib/update_112-114.xml" lang="en">Update: from 1.1.2 to 1.1.4</link>
+			<link type="contrib" href="contrib/update_107-114.xml" lang="en">Update: from 1.0.7 to 1.1.4</link>
 		</link-group>
 	</header>
 
@@ -132,7 +142,7 @@
 			<file from="root/includes/hooks/hook_archive.php" to="includes/hooks/hook_archive.php" />
 			<file from="root/language/en/mods/archive.php" to="language/en/mods/archive.php" />
 			<file from="root/language/en/mods/info_acp_archive.php" to="language/en/mods/info_acp_archive.php" />
-			<file from="root/styles/prosilver/template/archive.html" to="styles/prosilver/template/archive.html" />
+			<file from="root/styles/prosilver/template/mods/archive.html" to="styles/prosilver/template/mods/archive.html" />
 			<file from="root/styles/prosilver/theme/archive.css" to="styles/prosilver/theme/archive.css" />
 			<file from="root/umil/*.*" to="umil/*.*" />
 		</copy>

@@ -12,62 +12,16 @@
 		{META}
 		<title><!-- IF ARCHIVE_TITLE_TOPIC -->{ARCHIVE_TITLE_TOPIC} <!-- IF ARCHIVE_POST_PAGE -->[{L_ARCHIVE_PAGE} {ARCHIVE_POST_PAGE}] <!-- ENDIF -->&bull; <!-- ENDIF --><!-- IF ARCHIVE_TITLE_FORUM -->{ARCHIVE_TITLE_FORUM} <!-- IF ARCHIVE_TOPIC_PAGE -->[{L_ARCHIVE_PAGE} {ARCHIVE_TOPIC_PAGE}] <!-- ENDIF -->&bull; <!-- ENDIF -->{L_ARCHIVE_MOD} &bull; {SITENAME}</title>
 		<link href="{T_THEME_PATH}/archive.css" rel="stylesheet" type="text/css"/>
-		<!-- IF ARCHIVE_CUSTOM_STYLE -->
-		<style type="text/css">
-		/* <![CDATA[ */
-			body
-			{
-				color: {ARCHIVE_STYLE_COLOR_COMMON};
-				background-color:{ARCHIVE_STYLE_BG_MAIN};
-			}
-			body a
-			{
-				color: {ARCHIVE_STYLE_COLOR_COMMON_LINK};
-			}
-			body a:visited
-			{
-				color: {ARCHIVE_STYLE_COLOR_COMMON_VLINK};
-			}
-			#archive_header
-			{
-				color: {ARCHIVE_STYLE_COLOR_HEADER};
-				background-color:{ARCHIVE_STYLE_BG_HEADER};
-			}
-			#archive_header a
-			{
-				color: {ARCHIVE_STYLE_COLOR_HEADER_LINK};
-			}
-			#archive_header a:visited
-			{
-				color: {ARCHIVE_STYLE_COLOR_HEADER_VLINK};
-			}
-			#archive_main
-			{
-				background-color:{ARCHIVE_STYLE_BG_BODY};
-			}
-			#archive_footer
-			{
-				background-color:{ARCHIVE_STYLE_BG_FOOTER};
-			}
-			.archive_posts
-			{
-				background-color:{ARCHIVE_STYLE_BG_POSTS};
-			}
-		/* ]]> */
-		</style>
-		<!-- ENDIF -->
-		<!-- IF ARCHIVE_ADDITIONAL_CODE -->
-		{ARCHIVE_ADDITIONAL_CODE}
-		<!-- ENDIF -->
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
 		<div id="archive_header">
 			<a href="{ARCHIVE_LINK_HOME}">{SITENAME}</a>
-			<a href="{ARCHIVE_LINK_HOME_FULL}" title="{L_ARCHIVE_VIEW_FULL_STORY_EXPLAIN} &quot;{SITENAME}&quot;" class="archive_viewfull">{L_ARCHIVE_VIEW_FULL_STORY}</a>
+			<a href="{ARCHIVE_LINK_HOME_FULL}" title="{L_ARCHIVE_VIEW_FULL_STORY_EXPLAIN} &quot;{SITENAME}&quot;">{L_ARCHIVE_VIEW_FULL_STORY}</a>
 			<!-- IF ARCHIVE_ROW_PARENT -->
 				<!-- BEGIN archive_row_parent -->
 					&nbsp;&#62;&#62;&nbsp;<a href="{archive_row_parent.ARCHIVE_ROW_PARENT_LINK}">{archive_row_parent.ARCHIVE_ROW_PARENT_NAME}</a>
-					<a href="{archive_row_parent.ARCHIVE_ROW_PARENT_LINK_FULL}" title="{L_ARCHIVE_VIEW_FULL_STORY_EXPLAIN} &quot;{archive_row_parent.ARCHIVE_ROW_PARENT_NAME}&quot;" class="archive_viewfull">{L_ARCHIVE_VIEW_FULL_STORY}</a>
+					<a href="{archive_row_parent.ARCHIVE_ROW_PARENT_LINK_FULL}" title="{L_ARCHIVE_VIEW_FULL_STORY_EXPLAIN} &quot;{archive_row_parent.ARCHIVE_ROW_PARENT_NAME}&quot;">{L_ARCHIVE_VIEW_FULL_STORY}</a>
 				<!-- END archive_row_parent -->
 			<!-- ENDIF -->
 		</div>
@@ -108,8 +62,8 @@
 				</div>
 				<!-- BEGIN archive_post -->
 					<div class="archive_post">
-						<h1<!-- IF ARCHIVE_CUSTOM_STYLE --> style="color: {ARCHIVE_STYLE_COLOR_TITLE};"<!-- ENDIF -->>
-							<b<!-- IF ARCHIVE_CUSTOM_STYLE --> style="color: {ARCHIVE_STYLE_COLOR_AUTHOR};"<!-- ENDIF -->>{archive_post.ARCHIVE_POST_AUTHOR}</b>: {archive_post.ARCHIVE_POST_SUBJECT} <i>({archive_post.ARCHIVE_POST_TIME})</i>
+						<h1>
+							<b>{archive_post.ARCHIVE_POST_AUTHOR}</b>: {archive_post.ARCHIVE_POST_SUBJECT} <i>({archive_post.ARCHIVE_POST_TIME})</i>
 						</h1>
 						<p>{archive_post.ARCHIVE_POST_TEXT}</p>
 					</div>
@@ -132,7 +86,7 @@
 			<div id="archive_topic_title">{L_ARCHIVE_FORUM_PASSWORD}</div>
 			<div class="archive_post">
 				<!-- IF ARCHIVE_LOGIN_ERROR -->
-				<h1>{ARCHIVE_LOGIN_ERROR}</h1>
+				<h1><b>{ARCHIVE_LOGIN_ERROR}</b></h1>
 				<!-- ENDIF -->
 				<form id="archive_login_form" method="post" action="{S_ARCHIVE_LOGIN_ACTION}">
 				<fieldset>
@@ -152,7 +106,7 @@
 		</div>
 		
 		<div id="archive_footer">
-			Archive MOD by <a href="mailto:o0johntam0o@gmail.com">o0johntam0o</a><br/>
+			Archive MOD by <a href="https://www.phpbb.com/customise/db/author/o0johntam0o/" title="o0johntam0o@gmail.com">o0johntam0o</a><br/>
 			{CREDIT_LINE}
 			<!-- IF TRANSLATION_INFO --><br />{TRANSLATION_INFO}<!-- ENDIF -->
 			<!-- IF DEBUG_OUTPUT --><br />{DEBUG_OUTPUT}<!-- ENDIF -->

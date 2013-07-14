@@ -5,9 +5,9 @@
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
 	<header>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
-		<title lang="en"><![CDATA[Forum Archive II]]></title>
-		<description lang="en"><![CDATA[This will create an archive for your forum (Faster in loading pages). 100% xHTML 1.0 Strict valid]]></description>
-		<author-notes lang="en"><![CDATA[This version is designed for phpBB 3.0.11, but it also works fine on some previous version of phpBB3.]]></author-notes>
+		<title lang="en"><![CDATA[Forum Archive II - Update v1.0.7 to v1.1.4]]></title>
+		<description lang="en"><![CDATA[Update instructions - v1.0.7 to v1.1.4]]></description>
+		<author-notes lang="en"><![CDATA[This update instructions applies to v1.0.7 only]]></author-notes>
 
 		<author-group>
 			<author>
@@ -129,8 +129,75 @@
 
 	<action-group>
 		<copy>
-			<file from="root/language/vi/mods/archive.php" to="language/vi/mods/archive.php" />
-			<file from="root/language/vi/mods/info_acp_archive.php" to="language/vi/mods/info_acp_archive.php" />
+			<file from="root/archive.php" to="archive.php" />
+			<file from="root/install_archive.php" to="install_archive.php" />
+			<file from="root/adm/style/acp_archive.html" to="adm/style/acp_archive.html" />
+			<file from="root/includes/acp/acp_archive.php" to="includes/acp/acp_archive.php" />
+			<file from="root/includes/acp/info/acp_archive.php" to="includes/acp/info/acp_archive.php" />
+			<file from="root/includes/hooks/hook_archive.php" to="includes/hooks/hook_archive.php" />
+			<file from="root/language/en/mods/archive.php" to="language/en/mods/archive.php" />
+			<file from="root/language/en/mods/info_acp_archive.php" to="language/en/mods/info_acp_archive.php" />
+			<file from="root/styles/prosilver/template/mods/archive.html" to="styles/prosilver/template/mods/archive.html" />
+			<file from="root/styles/prosilver/theme/archive.css" to="styles/prosilver/theme/archive.css" />
+			<file from="root/umil/*.*" to="umil/*.*" />
 		</copy>
+		
+		<delete>
+			<file name="root/styles/prosilver/template/archive.html" />
+		</delete>
+		
+		<open src="search.php">
+			<edit>
+				<find><![CDATA[				'U_VIEW_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id),]]></find>
+				<action type="after-add"><![CDATA[				'U_VIEW_ARCHIVE'	=> (!empty($row['post_id'])) ? append_sid("{$phpbb_root_path}archive.$phpEx", "f=$forum_id&amp;t=" . $row['topic_id']) : '',]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<remove><![CDATA[				<!-- IF U_ARCHIVE_AVAILABLE -->
+					<a href="{U_ARCHIVE_PAGE}">{L_ARCHIVE_VIEW} {SITENAME}</a>
+				<!-- ENDIF -->]]></remove>
+			</edit>
+			<edit>
+				<comment lang="en">This just is a link to the archive page. You can place it in any where that you want</comment>
+				<find><![CDATA[			<ul class="linklist rightside">]]></find>
+				<action type="after-add"><![CDATA[				<!-- IF U_ARCHIVE_AVAILABLE -->
+				<li class="icon-home"><a href="{U_ARCHIVE_PAGE}">{L_ARCHIVE_MOD}</a></li>
+				<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/search_results.html">
+			<edit>
+				<comment lang="en">This just is a link to the archive page. You can place it in any where that you want</comment>
+				<find><![CDATA[			<h3><a href="{searchresults.U_VIEW_POST}">{searchresults.POST_SUBJECT}</a></h3>]]></find>
+				<action type="after-add"><![CDATA[			<h5><a href="{searchresults.U_VIEW_ARCHIVE}">{L_ARCHIVE_JUMP}</a></h5>]]></action>
+			</edit>
+		</open>
+		<open src="viewonline.php">
+			<edit>
+				<find><![CDATA[$user->setup('memberlist');]]></find>
+				<action type="after-add"><![CDATA[$user->add_lang('mods/archive');]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		case 'index':]]></find>
+				<action type="before-add"><![CDATA[		case 'archive':
+			$forum_id = $row['session_forum_id'];
+
+			if ($forum_id && $auth->acl_get('f_list', $forum_id))
+			{
+				$location = sprintf($user->lang['READING_FORUM'], $forum_data[$forum_id]['forum_name']);
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx", 'f=' . $forum_id);
+			}
+			else
+			{
+				$location = $user->lang['ARCHIVE_MOD'];
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx");
+			}
+		break;]]></action>
+			</edit>
+		</open>
+
+		<php-installer><![CDATA[install_archive.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Delete the installer (install_archive.php) after the installation.]]></diy-instructions>
 	</action-group>
 </mod>

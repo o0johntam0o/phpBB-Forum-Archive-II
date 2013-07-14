@@ -2,7 +2,7 @@
 /**
 *
 * @package Forum Archive II
-* @version 1.1.3 of 19.03.2013
+* @version 1.1.4 of 14.07.2013
 * @copyright (c) 2012 o0johntam0o - o0johntam0o@gmail.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -210,10 +210,9 @@ function fetch_topic_list($id = 0, $limit = 0, $start = 0)
 		if ($limit == 0 && $start == 0)
 		{
 			// For count
-			$tmp_sql = 'SELECT COUNT(topic_id) AS topic_count FROM ' . TOPICS_TABLE . 
-				' WHERE forum_id = ' . $id . (($auth->acl_get('m_approve', $id)) ? '' : ' AND topic_approved = 1');
+			$tmp_sql = 'SELECT forum_topics_real, forum_topics FROM ' . FORUMS_TABLE . ' WHERE forum_id = ' . $id;
 			$result = $db->sql_query($tmp_sql);
-			$topic_count = (int) $db->sql_fetchfield('topic_count');
+			$topic_count = (int) (($auth->acl_get('m_approve', $id)) ? $db->sql_fetchfield('forum_topics_real') : $db->sql_fetchfield('forum_topics'));
 			$db->sql_freeresult($result);
 			return $topic_count;
 		}
@@ -314,10 +313,10 @@ function fetch_post_list($id = 0, $limit = 0, $start = 0, $forum_id = 0)
 		if ($limit == 0 && $start == 0)
 		{
 			// For count
-			$tmp_sql = 'SELECT COUNT(post_id) AS post_count FROM ' . POSTS_TABLE . 
-				' WHERE topic_id = ' . $id . (($auth->acl_get('m_approve', $forum_id)) ? '' : ' AND post_approved = 1');
+			$tmp_sql = 'SELECT topic_replies, topic_replies_real FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $id;
 			$result = $db->sql_query($tmp_sql);
-			$post_count = (int) $db->sql_fetchfield('post_count');
+			$post_count = (int) (($auth->acl_get('m_approve', $id)) ? $db->sql_fetchfield('topic_replies_real') : $db->sql_fetchfield('topic_replies'));
+			$post_count = $post_count + 1;
 			$db->sql_freeresult($result);
 			return $post_count;
 		}
@@ -733,48 +732,15 @@ else if ($pageview_f > 0 && $archive_enable)
 	}
 }
 
-// Default colors
-$archive_style_bg_main_default = '#663300';
-$archive_style_bg_header_default = '#dcdcdc';
-$archive_style_bg_body_default = '#eeeeee';
-$archive_style_bg_footer_default = '#dcdcdc';
-$archive_style_bg_posts_default = '#ffffff';
-			
-$archive_style_color_common_default = '#000000';
-$archive_style_color_common_link_default = '#0000ff';
-$archive_style_color_common_vlink_default = '#800080';
-$archive_style_color_header_default = '#ff0000';
-$archive_style_color_header_link_default = '#0000ff';
-$archive_style_color_header_vlink_default = '#0000ff';
-$archive_style_color_title_default = '#0000ff';
-$archive_style_color_author_default = '#d23d24';
-
 $template->assign_vars(array(
 	'ARCHIVE_LINK_HOME'			=> append_sid("{$phpbb_root_path}archive.$phpEx"),
 	'ARCHIVE_LINK_HOME_FULL'	=> append_sid("{$phpbb_root_path}index.$phpEx"),
-	
-	'ARCHIVE_ADDITIONAL_CODE'	=> isset($config['archive_additional_code']) ? htmlspecialchars_decode($config['archive_additional_code']) : false,
-	'ARCHIVE_CUSTOM_STYLE'		=> isset($config['archive_custom_style']) ? $config['archive_custom_style'] : false,
-	'ARCHIVE_STYLE_BG_MAIN'		=> isset($config['archive_style_bg_main']) ? $config['archive_style_bg_main'] : $archive_style_bg_main_default,
-	'ARCHIVE_STYLE_BG_HEADER'	=> isset($config['archive_style_bg_header']) ? $config['archive_style_bg_header'] : $archive_style_bg_header_default,
-	'ARCHIVE_STYLE_BG_BODY'		=> isset($config['archive_style_bg_body']) ? $config['archive_style_bg_body'] : $archive_style_bg_body_default,
-	'ARCHIVE_STYLE_BG_FOOTER'	=> isset($config['archive_style_bg_footer']) ? $config['archive_style_bg_footer'] : $archive_style_bg_footer_default,
-	'ARCHIVE_STYLE_BG_POSTS'	=> isset($config['archive_style_bg_posts']) ? $config['archive_style_bg_posts'] : $archive_style_bg_posts_default,
-	
-	'ARCHIVE_STYLE_COLOR_COMMON'		=> isset($config['archive_style_color_common']) ? $config['archive_style_color_common'] : $archive_style_color_common_default,
-	'ARCHIVE_STYLE_COLOR_COMMON_LINK'	=> isset($config['archive_style_color_common_link']) ? $config['archive_style_color_common_link'] : $archive_style_color_common_link_default,
-	'ARCHIVE_STYLE_COLOR_COMMON_VLINK'	=> isset($config['archive_style_color_common_vlink']) ? $config['archive_style_color_common_vlink'] : $archive_style_color_common_vlink_default,
-	'ARCHIVE_STYLE_COLOR_HEADER'		=> isset($config['archive_style_color_header']) ? $config['archive_style_color_header'] : $archive_style_color_header_default,
-	'ARCHIVE_STYLE_COLOR_HEADER_LINK'	=> isset($config['archive_style_color_header_link']) ? $config['archive_style_color_header_link'] : $archive_style_color_header_link_default,
-	'ARCHIVE_STYLE_COLOR_HEADER_VLINK'	=> isset($config['archive_style_color_header_vlink']) ? $config['archive_style_color_header_vlink'] : $archive_style_color_header_vlink_default,
-	'ARCHIVE_STYLE_COLOR_TITLE'			=> isset($config['archive_style_color_title']) ? $config['archive_style_color_title'] : $archive_style_color_title_default,
-	'ARCHIVE_STYLE_COLOR_AUTHOR'		=> isset($config['archive_style_color_author']) ? $config['archive_style_color_author'] : $archive_style_color_author_default,
 	));
 
 page_header();
 
 $template->set_filenames(array(
-		'body' => 'archive.html'
+		'body' => 'mods/archive.html'
 	));
 
 page_footer();
