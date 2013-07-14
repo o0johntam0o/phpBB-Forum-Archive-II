@@ -8,7 +8,8 @@
 		<title lang="en"><![CDATA[Forum Archive II]]></title>
 		<description lang="en"><![CDATA[This will create an archive for your forum (Faster in loading pages). 100% xHTML 1.0 Strict valid]]></description>
 		<author-notes lang="en"><![CDATA[This version is designed for phpBB 3.0.11, but it also works fine on some previous version of phpBB3.]]></author-notes>
-
+		<github><![CDATA[https://github.com/o0johntam0o/phpBB-Forum-Archive-II]]></github>
+		
 		<author-group>
 			<author>
 				<username><![CDATA[o0johntam0o]]></username>
