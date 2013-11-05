@@ -2,7 +2,7 @@
 /**
 *
 * @package Forum Archive II
-* @version 1.1.4 of 14.07.2013
+* @version 1.1.5 of 11.05.2013
 * @copyright (c) 2012 o0johntam0o - o0johntam0o@gmail.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -50,6 +50,10 @@ $language_file = 'mods/info_acp_archive';
 * The version numbering must otherwise be compatible with the version_compare function - http://php.net/manual/en/function.version-compare.php
 */
 $versions = array(
+	'1.1.5'	=> array(
+		// Nothing changed in this version
+	),
+	
 	'1.1.4'	=> array(
 		'config_remove' => array(
 			array('archive_additional_code'),

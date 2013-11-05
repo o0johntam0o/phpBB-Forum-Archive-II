@@ -2,7 +2,7 @@
 /**
 *
 * @package Forum Archive II
-* @version 1.1.4 of 14.07.2013
+* @version 1.1.5 of 11.05.2013
 * @copyright (c) 2012 o0johntam0o - o0johntam0o@gmail.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -26,7 +26,7 @@ class acp_archive_info
 		return array(
 			'filename'	=> 'acp_archive',
 			'title'		=> 'ARCHIVE_TITLE_ACP',
-			'version'	=> '1.1.4',
+			'version'	=> '1.1.5',
 			'modes'		=> array(
 				'index'	=> array(
 					'title'			=> 'ARCHIVE_TITLE_ACP',
