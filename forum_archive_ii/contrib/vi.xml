@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
+	<header>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[Forum Archive II]]></title>
+		<description lang="en"><![CDATA[This will create an archive for your forum (Faster in loading pages). 100% xHTML 1.0 Strict valid]]></description>
+		<author-notes lang="en"></author-notes>
+		<github><![CDATA[https://github.com/o0johntam0o/phpBB-Forum-Archive-II]]></github>
+		
+		<author-group>
+			<author>
+				<username><![CDATA[o0johntam0o]]></username>
+				<email><![CDATA[o0johntam0o@gmail.com]]></email>
+			</author>
+		</author-group>
+
+		<mod-version>1.1.6</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>120</time>
+			<target-version>3.0.12</target-version>
+		</installation>
+		
+		<link-group>
+			<link type="parent" href="../install.xml" lang="en">Main Install File</link>
+		</link-group>
+	</header>
+
+	<action-group>
+		<copy>
+			<file from="root/language/vi/mods/archive.php" to="language/vi/mods/archive.php" />
+			<file from="root/language/vi/mods/info_acp_archive.php" to="language/vi/mods/info_acp_archive.php" />
+		</copy>
+	</action-group>
+</mod>

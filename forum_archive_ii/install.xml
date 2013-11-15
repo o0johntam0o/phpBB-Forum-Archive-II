@@ -17,7 +17,7 @@
 			</author>
 		</author-group>
 
-		<mod-version>1.1.5</mod-version>
+		<mod-version>1.1.6</mod-version>
 
 		<installation>
 			<level>easy</level>
@@ -26,6 +26,13 @@
 		</installation>
 
 		<history>
+			<entry>
+				<date>2013-11-12</date>
+				<rev-version>1.1.6</rev-version>
+				<changelog lang="en">
+					<change>Nothing changed in this version</change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2013-11-05</date>
 				<rev-version>1.1.5</rev-version>
@@ -131,37 +138,77 @@
 		</history>
 		
 		<link-group>
-			<link type="parent" href="../install.xml" lang="en">Main Install File</link>
+			<link type="template" href="./contrib/subsilver2.xml" lang="en">SubSilver2</link>
+			<link type="template" href="./contrib/absolution.xml" lang="en">Absolution</link>
+			<link type="language" href="./contrib/vi.xml" lang="en">Vietnamese</link>
+			<link type="contrib" href="contrib/update_114-116.xml" lang="en">Update: from 1.1.4 to 1.1.6</link>
+			<link type="contrib" href="contrib/update_113-116.xml" lang="en">Update: from 1.1.3 to 1.1.6</link>
+			<link type="contrib" href="contrib/update_112-116.xml" lang="en">Update: from 1.1.2 to 1.1.6</link>
 		</link-group>
 	</header>
 
 	<action-group>
 		<copy>
-			<file from="root/styles/absolution/template/mods/archive.html" to="styles/absolution/template/mods/archive.html" />
-			<file from="root/styles/absolution/theme/archive.css" to="styles/absolution/theme/archive.css" />
+			<file from="root/archive.php" to="archive.php" />
+			<file from="root/install_archive.php" to="install_archive.php" />
+			<file from="root/adm/style/acp_archive.html" to="adm/style/acp_archive.html" />
+			<file from="root/includes/acp/acp_archive.php" to="includes/acp/acp_archive.php" />
+			<file from="root/includes/acp/info/acp_archive.php" to="includes/acp/info/acp_archive.php" />
+			<file from="root/includes/hooks/hook_archive.php" to="includes/hooks/hook_archive.php" />
+			<file from="root/language/en/mods/archive.php" to="language/en/mods/archive.php" />
+			<file from="root/language/en/mods/info_acp_archive.php" to="language/en/mods/info_acp_archive.php" />
+			<file from="root/styles/prosilver/template/mods/archive.html" to="styles/prosilver/template/mods/archive.html" />
+			<file from="root/styles/prosilver/theme/archive.css" to="styles/prosilver/theme/archive.css" />
+			<file from="root/umil/*.*" to="umil/*.*" />
 		</copy>
 
-		<open src="styles/absolution/template/navbar.html">
+		<open src="search.php">
 			<edit>
-				<comment lang="en">This just is a link to the archive page. You can place it in any where that you want</comment>
-				<find><![CDATA[            <li<!-- IF SCRIPT_NAME eq 'index' --> class="active"<!-- ENDIF -->>
-                <a href="{U_INDEX}"><img src="{T_THEME_PATH}/images/nav-home.png" width="16" height="16" alt="" />{L_INDEX}</a>
-            </li>
-            <li class="divider"></li>]]></find>
-				<action type="after-add"><![CDATA[		<!-- IF U_ARCHIVE_AVAILABLE -->
-		<li>
-			<a href="{U_ARCHIVE_PAGE}">{L_ARCHIVE_MOD}</a>
-		</li>
-		<li class="divider"></li>
-		<!-- ENDIF -->]]></action>
+				<find><![CDATA[				'U_VIEW_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id),]]></find>
+				<action type="after-add"><![CDATA[				'U_VIEW_ARCHIVE'	=> (!empty($row['post_id'])) ? append_sid("{$phpbb_root_path}archive.$phpEx", "f=$forum_id&amp;t=" . $row['topic_id']) : '',]]></action>
 			</edit>
 		</open>
-		<open src="styles/absolution/template/search_results.html">
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<comment lang="en">This just is a link to the archive page. You can place it in any where that you want</comment>
+				<find><![CDATA[			<ul class="linklist rightside">]]></find>
+				<action type="after-add"><![CDATA[				<!-- IF U_ARCHIVE_AVAILABLE -->
+				<li class="icon-home"><a href="{U_ARCHIVE_PAGE}">{L_ARCHIVE_MOD}</a></li>
+				<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/search_results.html">
 			<edit>
 				<comment lang="en">This just is a link to the archive page. You can place it in any where that you want</comment>
 				<find><![CDATA[			<h3><a href="{searchresults.U_VIEW_POST}">{searchresults.POST_SUBJECT}</a></h3>]]></find>
 				<action type="after-add"><![CDATA[			<h5><a href="{searchresults.U_VIEW_ARCHIVE}">{L_ARCHIVE_JUMP}</a></h5>]]></action>
 			</edit>
 		</open>
+		<open src="viewonline.php">
+			<edit>
+				<find><![CDATA[$user->setup('memberlist');]]></find>
+				<action type="after-add"><![CDATA[$user->add_lang('mods/archive');]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		case 'index':]]></find>
+				<action type="before-add"><![CDATA[		case 'archive':
+			$forum_id = $row['session_forum_id'];
+
+			if ($forum_id && $auth->acl_get('f_list', $forum_id))
+			{
+				$location = sprintf($user->lang['READING_FORUM'], $forum_data[$forum_id]['forum_name']);
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx", 'f=' . $forum_id);
+			}
+			else
+			{
+				$location = $user->lang['ARCHIVE_MOD'];
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx");
+			}
+		break;]]></action>
+			</edit>
+		</open>
+
+		<php-installer><![CDATA[install_archive.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Delete the installer (install_archive.php) after the installation.]]></diy-instructions>
 	</action-group>
 </mod>

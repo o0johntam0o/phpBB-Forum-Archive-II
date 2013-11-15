@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
+	<header>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[Forum Archive II - Update v1.1.2 to v1.1.6]]></title>
+		<description lang="en"><![CDATA[Update instructions - v1.1.2 to v1.1.6]]></description>
+		<author-notes lang="en"><![CDATA[This update instructions applies to v1.1.2 only]]></author-notes>
+		<github><![CDATA[https://github.com/o0johntam0o/phpBB-Forum-Archive-II]]></github>
+		
+		<author-group>
+			<author>
+				<username><![CDATA[o0johntam0o]]></username>
+				<email><![CDATA[o0johntam0o@gmail.com]]></email>
+			</author>
+		</author-group>
+
+		<mod-version>1.1.6</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>120</time>
+			<target-version>3.0.12</target-version>
+		</installation>
+		
+		<link-group>
+			<link type="parent" href="../install.xml" lang="en">Main Install File</link>
+		</link-group>
+	</header>
+
+	<action-group>
+		<copy>
+			<file from="root/archive.php" to="archive.php" />
+			<file from="root/install_archive.php" to="install_archive.php" />
+			<file from="root/adm/style/acp_archive.html" to="adm/style/acp_archive.html" />
+			<file from="root/includes/acp/acp_archive.php" to="includes/acp/acp_archive.php" />
+			<file from="root/includes/acp/info/acp_archive.php" to="includes/acp/info/acp_archive.php" />
+			<file from="root/includes/hooks/hook_archive.php" to="includes/hooks/hook_archive.php" />
+			<file from="root/language/en/mods/archive.php" to="language/en/mods/archive.php" />
+			<file from="root/language/en/mods/info_acp_archive.php" to="language/en/mods/info_acp_archive.php" />
+			<file from="root/styles/prosilver/template/mods/archive.html" to="styles/prosilver/template/mods/archive.html" />
+			<file from="root/styles/prosilver/theme/archive.css" to="styles/prosilver/theme/archive.css" />
+			<file from="root/umil/*.*" to="umil/*.*" />
+		</copy>
+		
+		<delete>
+			<file name="root/styles/prosilver/template/archive.html" />
+		</delete>
+		
+		<open src="viewonline.php">
+			<edit>
+				<find><![CDATA[$user->setup('memberlist');]]></find>
+				<action type="after-add"><![CDATA[$user->add_lang('mods/archive');]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		case 'index':]]></find>
+				<action type="before-add"><![CDATA[		case 'archive':
+			$forum_id = $row['session_forum_id'];
+
+			if ($forum_id && $auth->acl_get('f_list', $forum_id))
+			{
+				$location = sprintf($user->lang['READING_FORUM'], $forum_data[$forum_id]['forum_name']);
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx", 'f=' . $forum_id);
+			}
+			else
+			{
+				$location = $user->lang['ARCHIVE_MOD'];
+				$location_url = append_sid("{$phpbb_root_path}archive.$phpEx");
+			}
+		break;]]></action>
+			</edit>
+		</open>
+
+		<php-installer><![CDATA[install_archive.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Delete the installer (install_archive.php) after the installation.]]></diy-instructions>
+	</action-group>
+</mod>
